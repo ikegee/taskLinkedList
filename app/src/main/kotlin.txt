@@ -1,0 +1,38 @@
+In Kotlin programming language, the symbols `?` and `!!` are used to handle nullability.
+
+The `?` symbol is used to declare a nullable variable. A nullable variable can hold a value or be
+null. For example, `var name: String? = null` declares a nullable variable `name` of type `String`.
+
+The `!!` symbol is called the **not-null assertion operator**. It is used to assert that a variable
+ is not null. If the variable is null, a `NullPointerException` is thrown at runtime. For example,
+ `val nameLength = name!!.length` asserts that `name` is not null and returns the length of the
+ string.
+
+It is important to use these symbols carefully to avoid runtime errors. The `?` symbol is used to
+handle nullability in a safe way, while the `!!` symbol should be used only when you are sure that
+the variable is not null.
+
+I hope that helps! Let me know if you have any other questions.
+
+Source: Conversation with Bing, 2023-12-10
+(1) Keywords and operators | Kotlin Documentation - Kotlin Programming Language.
+    https://kotlinlang.org/docs/keyword-reference.html.
+(2) Kotlin Programming Language. https://kotlinlang.org/docs/reference/grammar.html.
+(3) Typography - Kotlin Programming Language.
+    https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-typography/.
+(4) Kotlin Operators - GeeksforGeeks. https://www.geeksforgeeks.org/kotlin-operators/.
+
+./gradlew dependencyUpdates
+PS C:\WINDOWS\system32> $env:JAVA_HOME = "C:\\Program Files\\Android\\Android Studio\\jbr"
+PS C:\WINDOWS\system32> echo $env:JAVA_HOME echo $java
+
+No, the steps I provided earlier were for connecting your existing Android Studio project to an
+existing GitHub repository and updating an existing remote GitHub repository from Android Studio Hedgehog. To send new updated files to a remote project, you can follow these steps:
+
+Open your Android Studio project.
+From the top menu bar, select VCS > Git > Commit.
+In the Commit Changes dialog box, enter a commit message and select the files you want to commit.
+Click Commit.
+From the top menu bar, select VCS > Git > Push.
+In the Push Commits dialog box, select the remote repository you want to push to.
+Click Push.

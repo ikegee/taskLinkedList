@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/taskLinkedList.iml" filepath="$PROJECT_DIR$/.idea/modules/taskLinkedList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/taskLinkedList.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>

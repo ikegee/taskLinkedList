@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:2.0.0-Beta1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.jetbrains.kotlin" artifactId="kotlin-stdlib" version="2.0.0-Beta1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.0.0-Beta1/9806efc6f26ba3490d13272c0a1a5b187800feb2/kotlin-stdlib-2.0.0-Beta1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.0.0-Beta1/2ad14aed781c4a73ed4dbb421966d408a0a06686/kotlin-stdlib-2.0.0-Beta1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.0.0-Beta1/b7fa1b501ced1f4288936bf9d8c91768d9fd41a2/kotlin-stdlib-2.0.0-Beta1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
