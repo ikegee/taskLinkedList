@@ -26,8 +26,7 @@ Source: Conversation with Bing, 2023-12-10
 PS C:\WINDOWS\system32> $env:JAVA_HOME = "C:\\Program Files\\Android\\Android Studio\\jbr"
 PS C:\WINDOWS\system32> echo $env:JAVA_HOME echo $java
 
-No, the steps I provided earlier were for connecting your existing Android Studio project to an
-existing GitHub repository and updating an existing remote GitHub repository from Android Studio Hedgehog. To send new updated files to a remote project, you can follow these steps:
+To send new updated files to a remote project, you can follow these steps:
 
 Open your Android Studio project.
 From the top menu bar, select VCS > Git > Commit.

@@ -20,13 +20,17 @@ import java.util.LinkedList
  * Modified: 2024-02-06
  */
 class DisplayTasksActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+
     private var mTasks: LinkedList<Task>? = null
     private val taskList = TaskList.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_tasks)
         val taskText: TextView = findViewById(R.id.taskListTitle)
         val lvTasks = findViewById<ListView>(R.id.taskListView)
+
         mTasks = taskList.tasks
         if (mTasks == null || mTasks!!.isEmpty()) {
             taskText.setText(R.string.taskListEmpty)
@@ -68,7 +72,6 @@ class DisplayTasksActivity : AppCompatActivity(), AdapterView.OnItemClickListene
                 startActivity(intent)
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

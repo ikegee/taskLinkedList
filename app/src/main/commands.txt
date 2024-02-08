@@ -16,7 +16,7 @@ Let me know if this helps explain the workflow going forward!
 cd path/to/local/project
 git branch
 git checkout -b main
-git add.
+git add .
 git commit -m "initial commit"
 git push origin main
 

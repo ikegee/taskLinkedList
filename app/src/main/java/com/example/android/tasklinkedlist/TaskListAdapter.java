@@ -79,7 +79,7 @@ class TaskListAdapter extends ArrayAdapter<Task> {
                 Log.d(TAG, "default");
                 icon.setImageResource(R.drawable.ic_priority_high);
         }
-        //Log.d(TAG, task.getPriority());
+        Log.d(TAG, task.getPriority());
     }
 }
 

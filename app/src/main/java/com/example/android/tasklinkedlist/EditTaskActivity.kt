@@ -152,7 +152,6 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
                 // notifyItemRemoved(position) method on adapter
                 //dbManager.update(_id, title, desc);
                 populateAndSaveDataFromSingleton(taskId)
-                //Toast.makeText(EditTaskActivity.this, "Clicked : " + taskInstance.hashCode(), Toast.LENGTH_SHORT).show();
                 returnHome()
             }
 
@@ -165,6 +164,17 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.button_email -> emailTaskInfo()
         }
+    }
+
+    private fun populateAndSaveDataFromSingleton(id: UUID?) {
+        val task = taskInstance.getTask(id)
+        task.title = taskTitle!!.text.toString()
+        task.description = taskDescription!!.text.toString()
+        task.date = formatDate(taskDate!!.text.toString())
+        task.category = theCategory
+        task.priority = thePriority
+        task.isTasked = isChecked
+        taskInstance.updateTask(task)
     }
 
     private fun setTaskStatus(taskCheckBox: CheckBox?, `var`: Boolean) {
@@ -196,17 +206,6 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
         } catch (noSuchActivity: ActivityNotFoundException) {
             noSuchActivity.message
         }
-    }
-
-    private fun populateAndSaveDataFromSingleton(id: UUID?) {
-        val task = taskInstance.getTask(id)
-        task.title = taskTitle!!.text.toString()
-        task.description = taskDescription!!.text.toString()
-        task.date = formatDate(taskDate!!.text.toString())
-        task.category = theCategory
-        task.priority = thePriority
-        task.isTasked = isChecked
-        taskInstance.updateTask(task)
     }
 
     private fun returnHome() {
