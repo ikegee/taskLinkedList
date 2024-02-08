@@ -17,7 +17,7 @@ cd path/to/local/project
 git branch
 git checkout -b main
 git add .
-git commit -m "initial commit"
+git commit -m "third commit"
 git push origin main
 
 =======================================================================
