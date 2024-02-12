@@ -1,7 +1,9 @@
 package com.example.android.tasklinkedlist
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,11 +17,11 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.tasklinkedlist.R
-
 import java.text.ParseException
-import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import java.util.UUID
 
 /**
@@ -27,10 +29,10 @@ import java.util.UUID
  * Date: Feb. 15, 2017 Time: 10:34:43 PM
  * Author: G.E. Eidsness
  * Updated: 2023-12-09 => EditTaskActivity.kt
+ * Modified: 2024-02-10
  */
 class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val taskInstance = TaskList.getInstance()
     private var taskTitle: EditText? = null
     private var taskDescription: EditText? = null
     private var taskDate: Button? = null
@@ -146,18 +148,28 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
         btnEmail.setOnClickListener(this)
     }
 
+    // Modify
     override fun onClick(v: View) {
         when (v.id) {
             R.id.button_update -> {
-                // notifyItemRemoved(position) method on adapter
-                //dbManager.update(_id, title, desc);
-                populateAndSaveDataFromSingleton(taskId)
+                // get Task object from the singleton
+                val task = taskInstance.getTask(taskId)
+                // Get the position passed from DisplayTasksActivity
+                val position = intent.getIntExtra("taskPosition", -1)
+                // Update the task object with the data from the EditTaskActivity
+                if (task != null && position != -1) {
+                    task.title = taskTitle!!.text.toString()
+                    task.description = taskDescription!!.text.toString()
+                    task.date = formatDate(taskDate!!.text.toString())
+                    task.category = theCategory
+                    task.priority = thePriority
+                    task.isTasked = isChecked
+                    taskInstance.updateTask(task)
+                }
                 returnHome()
             }
 
             R.id.button_delete -> {
-                // notifyItem(position) method on adapter
-                //dbManager.delete(_id);
                 taskInstance.deleteTaskWithId(taskId)
                 returnHome()
             }
@@ -166,15 +178,10 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun populateAndSaveDataFromSingleton(id: UUID?) {
-        val task = taskInstance.getTask(id)
-        task.title = taskTitle!!.text.toString()
-        task.description = taskDescription!!.text.toString()
-        task.date = formatDate(taskDate!!.text.toString())
-        task.category = theCategory
-        task.priority = thePriority
-        task.isTasked = isChecked
-        taskInstance.updateTask(task)
+    private fun returnHome() {
+        val intent = Intent(this@EditTaskActivity, DisplayTasksActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setTaskStatus(taskCheckBox: CheckBox?, `var`: Boolean) {
@@ -208,31 +215,76 @@ class EditTaskActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun returnHome() {
-        val mainIntent = Intent(applicationContext, DisplayTasksActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(mainIntent)
-        finish()
-    }
-
     companion object {
         private val TAG = EditTaskActivity::class.java.simpleName
         private const val DIALOG_DATE = "DialogDate"
-        private const val EMAILADDRESS = "joeblow@gmail.ca"
+        private val taskInstance = TaskList.getInstance()
+        private const val EMAILADDRESS = "joeblow@from.idaho.ca"
         private var EMAILSENT = false
         private var theCategory: String? = null
         private var thePriority: String? = null
-        private var isChecked = false
+        private var isChecked: Boolean = false
         private var myDate: Date? = null
-        private fun formatDate(strDate: String): Date? {
-            val DATEFORMAT = "EEE MMM dd HH:mm:ss Z yyyy"
-            val sdf = SimpleDateFormat(DATEFORMAT, Locale.CANADA)
-            try {
-                myDate = sdf.parse(strDate)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            return myDate
+
+        @SuppressLint("SimpleDateFormat")
+        private fun parseShortDate(format: SimpleDateFormat, strDate: String): Date? {
+            val date = format.parse(strDate)
+            //... code to handle short date
+            // Parse short date
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA) // 2018-02-20
+            val shortDate = sdf.parse(strDate)
+
+            // Get day of week
+            val dayOfWeek = SimpleDateFormat("EEEE", Locale.US).format(shortDate)
+
+            // Create Calendar
+            val cal = Calendar.getInstance()
+            cal.time = shortDate
+
+            // Set time fields
+            cal.set(Calendar.HOUR_OF_DAY, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+
+            // Set timezone
+            cal.timeZone = TimeZone.getTimeZone("PST")
+
+            // Format to full string
+            val formatted = sdf.format(shortDate)
+
+            // Set to Friday in example
+            formatted.replace(formatted.substring(0, 3), dayOfWeek)
+            Log.d(TAG, "Formatted: $formatted")
+            myDate = sdf.parse(formatted)
+
+            return date
         }
+    }
+
+    // incoming: Sat Feb 10 01:09:40 PST 2024
+    @SuppressLint("SimpleDateFormat")
+    private fun formatDate(strDate: String): Date? {
+
+        val shortFormat = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA)
+        val longFormat = SimpleDateFormat("EEEE MMM dd HH:mm:ss Z yyyy", Locale.CANADA)
+        val defaultFormat = SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.CANADA)
+
+        if (strDate.matches("\\d{4}-\\d{2}-\\d{2}".toRegex())) {
+            return parseShortDate(shortFormat, strDate)
+        }
+
+        var date: Date? = null
+        try {
+            date = longFormat.parse(strDate)
+        } catch (e: ParseException) {
+            // failed, try default format
+            date = defaultFormat.parse(strDate)
+            try {
+                date = defaultFormat.parse(strDate)
+            } catch (e: ParseException) {
+                // Both formats failed, handle error or log it
+            }
+        }
+        return date
     }
 }

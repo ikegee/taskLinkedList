@@ -8,12 +8,15 @@ import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import com.example.tasklinkedlist.R
 import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Calendar
+import java.util.Date
 
 /**
  * Author:  G.E. Eidsness
  * Project: TaskLinkedList File: TaskDatePicker.java
- * Created:  2017-08-15; Updated : 2023-12-10 TaskDatePicker.kt
+ * Created:  2017-08-15;
+ * Updated : 2023-12-10 TaskDatePicker.kt
  */
 
 class TaskDatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -36,9 +39,12 @@ class TaskDatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun sendResult(date: LocalDate) {
+        // Convert LocalDate to Date
+        val instant = date.atStartOfDay(ZoneId.systemDefault()).toInstant()
+        val dateForTask = Date.from(instant)
         requireActivity().supportFragmentManager
             .setFragmentResult("requestKey", Bundle().apply {
-                putSerializable("taskDate", date)
+                putSerializable("taskDate", dateForTask)
             })
     }
 

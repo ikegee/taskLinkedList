@@ -1,0 +1,6 @@
+com.example.tasklinkedlist.test.app-jetified-annotation-experimental-1.3.0-0 C:\Users\ike\.gradle\caches\transforms-3\3be9b09ba7919637d7845efe358b0b0b\transformed\jetified-annotation-experimental-1.3.0\res
+com.example.tasklinkedlist.test.app-jetified-core-1.5.0-1 C:\Users\ike\.gradle\caches\transforms-3\7d83269462105a17d291621cdf0cac62\transformed\jetified-core-1.5.0\res
+com.example.tasklinkedlist.test.app-androidTest-2 C:\Users\ike\AndroidStudioProjects\taskLinkedList\app\build\generated\res\resValues\androidTest\debug
+com.example.tasklinkedlist.test.app-mergeDebugAndroidTestResources-3 C:\Users\ike\AndroidStudioProjects\taskLinkedList\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.tasklinkedlist.test.app-mergeDebugAndroidTestResources-4 C:\Users\ike\AndroidStudioProjects\taskLinkedList\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.tasklinkedlist.test.app-merged_res-5 C:\Users\ike\AndroidStudioProjects\taskLinkedList\app\build\intermediates\merged_res\debugAndroidTest

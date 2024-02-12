@@ -25,31 +25,63 @@ public class Task {
     private String mPriority;
 
     Task() {
-        mpId = (int )Math.floor((Math.random() * 100000) + 1);
+        mpId = (int) Math.floor((Math.random() * 100000) + 1);
         mId = UUID.randomUUID();
         mDate = new Date();
     }
 
     @NonNull
-    public UUID getId() { return mId; }
+    public UUID getId() {
+        return mId;
+    }
 
-    Date getDate() { return mDate; }
-    void setDate(Date date) { mDate = date; }
+    Date getDate() {
+        return mDate;
+    }
 
-    String getTitle() { return mTitle; }
-    void setTitle(String title) { mTitle = title; }
+    void setDate(Date date) {
+        mDate = date;
+    }
 
-    String getDescription() {  return mDescription;  }
-    void setDescription(String Description) { mDescription = Description; }
+    String getTitle() {
+        return mTitle;
+    }
 
-    boolean isTasked() { return mTasked; }
-    void setTasked(boolean solved) { mTasked = solved; }
+    void setTitle(String title) {
+        mTitle = title;
+    }
 
-    String getPriority() { return mPriority; }
-    void setPriority(String Priority) {mPriority = Priority; }
+    String getDescription() {
+        return mDescription;
+    }
 
-    String getCategory() { return mCategory; }
-    void setCategory(String Category) { mCategory = Category; }
+    void setDescription(String Description) {
+        mDescription = Description;
+    }
+
+    boolean isTasked() {
+        return mTasked;
+    }
+
+    void setTasked(boolean solved) {
+        mTasked = solved;
+    }
+
+    String getPriority() {
+        return mPriority;
+    }
+
+    void setPriority(String Priority) {
+        mPriority = Priority;
+    }
+
+    String getCategory() {
+        return mCategory;
+    }
+
+    void setCategory(String Category) {
+        mCategory = Category;
+    }
 
     @NonNull
     @Override

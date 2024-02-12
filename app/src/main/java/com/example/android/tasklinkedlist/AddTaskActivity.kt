@@ -1,5 +1,6 @@
 package com.example.android.tasklinkedlist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,16 +17,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.tasklinkedlist.R
-import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 /**
  * Project: TaskLinkedList File: AddTaskActivity.java
  * Date: Feb. 15, 2017 Time: 10:34:43 PM
  * Author: G.E. Eidsness
  * Updated: 2023-12-10  AddTaskActivity.kt
+ * Modified: 2024-02-10
  */
 class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -40,12 +43,13 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
         Log.i(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
+
         spCategory = findViewById<View>(R.id.spinner_category) as Spinner
         spPriority = findViewById<View>(R.id.spinner_priority) as Spinner
         taskTitle = findViewById<View>(R.id.task_title) as EditText
         taskDescription = findViewById<View>(R.id.taskDescription) as EditText
         taskDate = findViewById<View>(R.id.button_task_date) as Button
-        taskDate!!.text = Date().toString()
+        taskDate!!.text = Date().toString()  // incoming: SAT FEB 10 01:09:40 PST 2024
         taskDate!!.setOnClickListener { _: View? ->
             val manager = supportFragmentManager
             val newFragment: DialogFragment = TaskDatePicker()
@@ -128,7 +132,7 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
             theTitle = taskTitle!!.text.toString()
             if (theTitle!!.isEmpty()) {
                 Toast.makeText(applicationContext, "Enter Title", Toast.LENGTH_SHORT).show()
-                taskTitle!!.setText(null)
+                taskTitle!!.text = null
                 taskTitle!!.hint = "Enter Title"
                 return
             }
@@ -152,14 +156,14 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
         val task = Task()
         task.title = theTitle
         task.description = theDescription
-        task.date = formatDate(theDate)
+        task.date = theDate?.let { formatDate(it) }
         task.category = theCategory
         task.priority = thePriority
         task.isTasked = isChecked
         taskInstance.addTask(task)
     }
 
-    private fun returnHome() {
+     private fun returnHome() {
         val mainIntent = Intent(applicationContext, DisplayTasksActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(mainIntent)
@@ -167,7 +171,7 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        private val TAG = AddTaskActivity::class.java.simpleName
+        val TAG: String = AddTaskActivity::class.java.simpleName
         private const val DIALOG_DATE = "DialogDate"
         private val taskInstance = TaskList.getInstance()
         private var theTitle: String? = null
@@ -175,15 +179,51 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener {
         private var theDescription: String? = null
         private var theCategory: String? = null
         private var thePriority: String? = null
-        private var isChecked = false
+        private var isChecked: Boolean = false
         private var myDate: Date? = null
-        private fun formatDate(strDate: String?): Date? {
-            val DATEFORMAT = "EEE MMM dd HH:mm:ss Z yyyy"
-            val sdf = SimpleDateFormat(DATEFORMAT, Locale.CANADA)
-            try {
-                myDate = sdf.parse(theDate)
-            } catch (e: ParseException) {
-                e.printStackTrace()
+
+        // incoming: FRI FEB 09 13:30:40 PST 2024
+        @SuppressLint("SimpleDateFormat")
+        private fun formatDate(strDate: String): Date? {
+            val dateFORMAT = "EEEE MMM dd HH:mm:ss Z yyyy" //"EEE MMM dd HH:mm:ss zzz yyyy"
+            val sdf = java.text.SimpleDateFormat(dateFORMAT, Locale.CANADA)
+            val regex = "\\d{4}-\\d{2}-\\d{2}".toRegex()
+
+            if (strDate.matches(regex)) {
+                // Parse short date
+                val sdfShort = android.icu.text.SimpleDateFormat("yyyy-MM-dd")
+                val shortDate = sdfShort.parse(strDate)
+
+                // Get day of week
+                val dayOfWeek = SimpleDateFormat("EEEE", Locale.CANADA).format(shortDate)
+                // Create Calendar
+                val cal = Calendar.getInstance()
+                cal.time = shortDate
+
+                // Set time fields
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+
+                // Set timezone
+                cal.timeZone = TimeZone.getTimeZone("PST")
+
+                // Format to full string
+                val formatted = sdf.format(shortDate)
+
+                // Set to Friday in example
+                formatted.replace(formatted.substring(0,3), dayOfWeek)
+
+               myDate = sdf.parse(formatted)
+
+            } else {
+                // original parsing
+                try {
+                    myDate = sdf.parse(strDate)
+                } catch (e: java.text.ParseException) {
+                    e.printStackTrace()
+                    Log.e(TAG, "formatDate: $e")
+                }
             }
             return myDate
         }

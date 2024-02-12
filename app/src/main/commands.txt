@@ -20,6 +20,7 @@ git add .
 git commit -m "third commit"
 git push origin main
 
+Could you please modify the code below with the solution above:
 =======================================================================
 ./gradlew clean build
 ./gradlew clean build --warning-mode=all

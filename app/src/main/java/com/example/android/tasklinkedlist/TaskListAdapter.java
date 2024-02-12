@@ -1,8 +1,7 @@
 package com.example.android.tasklinkedlist;
-import com.example.tasklinkedlist.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.example.tasklinkedlist.R;
+
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Project: TaskLinkedList File: TaskListAdapter.java
@@ -33,6 +35,7 @@ class TaskListAdapter extends ArrayAdapter<Task> {
         mTasks = tasks;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -52,7 +55,11 @@ class TaskListAdapter extends ArrayAdapter<Task> {
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.task_list_item_descriptionTextView);
         descriptionTextView.setText(task.getDescription());
         TextView dateTextView = (TextView) rowView.findViewById(R.id.task_list_item_dateTextView);
-        dateTextView.setText(task.getDate().toString());
+        if (task.getDate() != null) {
+            dateTextView.setText(task.getDate().toString());
+        } else {
+            dateTextView.setText("Null");
+        }
         TextView categoryTextView = (TextView) rowView.findViewById(R.id.task_list_item_categoryTextView);
         categoryTextView.setText(String.format("Category: %s", task.getCategory()));
         TextView priorityTextView = (TextView) rowView.findViewById(R.id.task_list_item_priorityTextView);

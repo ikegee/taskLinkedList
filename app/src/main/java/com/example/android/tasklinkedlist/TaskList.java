@@ -15,14 +15,10 @@ import java.util.UUID;
 public class TaskList {
 
     private static final String TAG = TaskList.class.getSimpleName();
-    private final LinkedList<Task> tasks  = new LinkedList<>();
+    private final LinkedList<Task> tasks = new LinkedList<>();
 
     private TaskList() {
         super();
-    }
-
-    private static final class STaskListHolder {
-        static final TaskList sTaskList = new TaskList();
     }
 
     static TaskList getInstance() {
@@ -86,6 +82,10 @@ public class TaskList {
         }
         Log.d(TAG, "Updated: " + isUpdated);
         return isUpdated;
+    }
+
+    private static final class STaskListHolder {
+        static final TaskList sTaskList = new TaskList();
     }
 
 }
