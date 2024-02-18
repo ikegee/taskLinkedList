@@ -21,9 +21,6 @@ import java.util.LinkedList
  */
 class DisplayTasksActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
-    private var mTasks: LinkedList<Task>? = null
-    private val taskList = TaskList.getInstance()
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -78,5 +75,7 @@ class DisplayTasksActivity : AppCompatActivity(), AdapterView.OnItemClickListene
 
     companion object {
         private val TAG = DisplayTasksActivity::class.java.simpleName
+        private var mTasks: LinkedList<Task>? = null
+        private val taskList = TaskList.getInstance()
     }
 }

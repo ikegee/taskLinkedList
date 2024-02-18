@@ -50,23 +50,23 @@ class TaskListAdapter extends ArrayAdapter<Task> {
 
         Task task = mTasks.get(position);
 
-        TextView titleTextView = (TextView) rowView.findViewById(R.id.task_list_item_titleTextView);
+        TextView titleTextView = rowView.findViewById(R.id.task_list_item_titleTextView);
         titleTextView.setText(task.getTitle());
-        TextView descriptionTextView = (TextView) rowView.findViewById(R.id.task_list_item_descriptionTextView);
+        TextView descriptionTextView = rowView.findViewById(R.id.task_list_item_descriptionTextView);
         descriptionTextView.setText(task.getDescription());
-        TextView dateTextView = (TextView) rowView.findViewById(R.id.task_list_item_dateTextView);
+        TextView dateTextView = rowView.findViewById(R.id.task_list_item_dateTextView);
         if (task.getDate() != null) {
             dateTextView.setText(task.getDate().toString());
         } else {
             dateTextView.setText("Null");
         }
-        TextView categoryTextView = (TextView) rowView.findViewById(R.id.task_list_item_categoryTextView);
+        TextView categoryTextView = rowView.findViewById(R.id.task_list_item_categoryTextView);
         categoryTextView.setText(String.format("Category: %s", task.getCategory()));
-        TextView priorityTextView = (TextView) rowView.findViewById(R.id.task_list_item_priorityTextView);
+        TextView priorityTextView = rowView.findViewById(R.id.task_list_item_priorityTextView);
         priorityTextView.setText(String.format("Priority: %s", task.getPriority()));
-        CheckBox statusCheckBox = (CheckBox) rowView.findViewById(R.id.task_list_item_taskCheckBox);
+        CheckBox statusCheckBox = rowView.findViewById(R.id.task_list_item_taskCheckBox);
         statusCheckBox.setChecked(task.isTasked());
-        ImageView icon = (ImageView) rowView.findViewById(R.id.task_list_item_iconView);
+        ImageView icon = rowView.findViewById(R.id.task_list_item_iconView);
         setPriorityIcon(task, icon);
         return rowView;
     }
